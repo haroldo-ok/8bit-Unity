@@ -4,11 +4,7 @@
     "general": {
         "disk": "vn-poc", 
         "code": [
-            "projects/slicks/src/slicks.c", 
-            "projects/slicks/src/game.c", 
-            "projects/slicks/src/interface.c", 
-            "projects/slicks/src/navigation.c", 
-            "projects/slicks/src/network.c"
+            "projects/vn-poc/src/test.c"
         ], 
         "shared": [
             "projects/slicks/navigation/arizona.nav", 
