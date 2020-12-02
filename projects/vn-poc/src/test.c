@@ -2,6 +2,12 @@
 // 8bit-Unity SDK
 #include "unity.h"
 
+#define LINE_COUNT 4
+
+unsigned char* listNames[16] = {
+	"Line 1", "Line 2", "Line 3", "Line 4"
+};
+
 int main (void) 
 {
 	unsigned char i;
@@ -19,10 +25,8 @@ int main (void)
 	EnterBitmapMode();
 	
 	paperColor = BLACK;
-	for (i=1; i< 15; i++) {
-		inkColor = i;
-		PrintStr(15, i+1, "Hello, 8BIT-UNITY");
-	}
+	inkColor = CYAN;	
+	ListBox(1, CHR_ROWS - LINE_COUNT - 4, CHR_COLS - 2, LINE_COUNT + 2, "Character name", listNames, LINE_COUNT);
 	
 	// Main Loop
 	while (1) {
