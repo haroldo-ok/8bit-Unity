@@ -124,15 +124,18 @@ int main (void)
 	
 	// Main Loop
 	while (1) {
-		bufferClear();
-		s = "This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another";
-		while (*s) {
+		s = "This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
+		Here's yet another line added to test if the line wrapping is working.";
+		while (s) {
+			bufferClear();
+			s = bufferWrappedText(s, 0, 0, MSG_COL_COUNT, MSG_LINE_COUNT);			
+			
 			paperColor = BLACK;
 			inkColor = CYAN;	
-			s = bufferWrappedText(s, 0, 0, MSG_COL_COUNT, MSG_LINE_COUNT);			
 			ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
 			
-			wait(100);
+			cgetc();
+			while (kbhit()) { cgetc(); }
 		}
 	}
     	
