@@ -79,9 +79,31 @@ char *bufferWrappedTextLine(char *s, char x, char y, char w) {
 	return *endOfLine ? endOfLine : 0;
 }
 
+char *bufferWrappedText(char *s, char x, char y, char w, char h) {
+	char *o = s;
+	char ty = y;
+	char maxY = y + h;
+	
+	while (o && *o && ty < maxY) {
+		o = bufferWrappedTextLine(o, x, ty, w);
+		ty++;
+	}
+	
+	return o;
+}
+
+void bufferClear() {
+	unsigned char i;
+	
+	for (i = 0; i != MSG_LINE_COUNT; i++) {
+		msgLines[i][0] = 0;
+	}
+}
+
 int main (void) 
 {
 	unsigned char i;
+	char *s;
 	
 	// Reset screen
 	clrscr();
@@ -100,14 +122,18 @@ int main (void)
 		strcpy(msgLines[i], "");
 	}
 	
-	bufferWrappedTextLine("This is a test with really long lines let's see if they wrap correctly", 0, 0, MSG_COL_COUNT);
-	
-	paperColor = BLACK;
-	inkColor = CYAN;	
-	ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);
-	
 	// Main Loop
 	while (1) {
+		bufferClear();
+		s = "This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another";
+		while (*s) {
+			paperColor = BLACK;
+			inkColor = CYAN;	
+			s = bufferWrappedText(s, 0, 0, MSG_COL_COUNT, MSG_LINE_COUNT);			
+			ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
+			
+			wait(100);
+		}
 	}
     	
     // Done
