@@ -143,8 +143,11 @@ void vnText(char *text) {
 		inkColor = CYAN;	
 		ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
 
+/*
 		while (GetJoy(0) & JOY_BTN1);
-		while (!(GetJoy(0) & JOY_BTN1));
+//		while (!(GetJoy(0) & JOY_BTN1));
+*/
+		cgetc();
 	}
 }
 
@@ -223,7 +226,7 @@ int main (void)
 	while (1) {
 		vnText("This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
 		Here's yet another line added to test if the line wrapping is working.");
-		vnTextF("Test number format %d -- %d", 4, 5);
+		//vnTextF("Test number format %d -- %d", 4, 5);
 	}
     	
     // Done
