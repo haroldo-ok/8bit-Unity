@@ -124,15 +124,6 @@ char *bufferWrappedText(char *s, char x, char y, char w, char h) {
 	return o;
 }
 
-void waitKeyRelease() {
-	clock_t timeout = clock() + 20;
-	while (clock() < timeout) {
-		if (!kbhit()) break; // did we get an entry?
-		while (kbhit()) cgetc(); // flush buffer
-		timeout = clock()+20; // set another timeout
-	}
-}
-
 void bufferClear() {
 	unsigned char i;
 	
@@ -151,9 +142,9 @@ void vnText(char *text) {
 		paperColor = BLACK;
 		inkColor = CYAN;	
 		ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
-		
-		cgetc();			
-		waitKeyRelease();
+
+		while (GetJoy(0) & JOY_BTN1);
+		while (!(GetJoy(0) & JOY_BTN1));
 	}
 }
 
