@@ -8,6 +8,7 @@
 #define MSG_LINE_COUNT 4
 
 unsigned char* msgLines[MSG_LINE_COUNT];
+char characterName[32];
 
 char *bufferWrappedTextLine(char *s, char x, char y, char w) {
 	char *o, ch;
@@ -100,10 +101,25 @@ void bufferClear() {
 	}
 }
 
+void vnText(char *text) {
+	char *textToDisplay;
+	
+	for (textToDisplay = text; textToDisplay;) {
+		bufferClear();
+		textToDisplay = bufferWrappedText(textToDisplay, 0, 0, MSG_COL_COUNT, MSG_LINE_COUNT);			
+		
+		paperColor = BLACK;
+		inkColor = CYAN;	
+		ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
+		
+		cgetc();			
+		while (kbhit()) { cgetc(); }
+	}
+}
+
 int main (void) 
 {
 	unsigned char i;
-	char *s;
 	
 	// Reset screen
 	clrscr();
@@ -122,21 +138,12 @@ int main (void)
 		strcpy(msgLines[i], "");
 	}
 	
+	strcpy(characterName, "Name of the character");
+	
 	// Main Loop
 	while (1) {
-		s = "This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
-		Here's yet another line added to test if the line wrapping is working.";
-		while (s) {
-			bufferClear();
-			s = bufferWrappedText(s, 0, 0, MSG_COL_COUNT, MSG_LINE_COUNT);			
-			
-			paperColor = BLACK;
-			inkColor = CYAN;	
-			ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
-			
-			cgetc();
-			while (kbhit()) { cgetc(); }
-		}
+		vnText("This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
+		Here's yet another line added to test if the line wrapping is working.");
 	}
     	
     // Done
