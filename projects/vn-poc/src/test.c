@@ -10,37 +10,6 @@
 unsigned char* msgLines[MSG_LINE_COUNT];
 char characterName[32];
 
-/* reverse:  reverse string s in place */
-void reverse(char s[])
-{
-    int c, i, j;
-
-    for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
-        c = s[i];
-        s[i] = s[j];
-        s[j] = c;
-    }
-}
-
-char *mini_itoa(int n, char s[]) {
-    int i, sign;
-
-    sign = n;
-    i = 0;
-    do {        /* generate digits in reverse order */
-        s[i++] = abs(n % 10) + '0';     /* get next digit */
-    } while (n /= 10);                  /* delete it */
-
-    if (sign < 0) {
-        s[i++] = '-';
-	}
-
-    s[i] = '\0';
-    reverse(s);
-	
-	return s;
-}
-
 char *bufferWrappedTextLine(char *s, char x, char y, char w) {
 	char *o, ch;
 	char tx = x;
@@ -143,10 +112,6 @@ void vnText(char *text) {
 		inkColor = CYAN;	
 		ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
 
-/*
-		while (GetJoy(0) & JOY_BTN1);
-//		while (!(GetJoy(0) & JOY_BTN1));
-*/
 		cgetc();
 	}
 }
@@ -178,10 +143,9 @@ void vnTextF(char *format, ...) {
 				case 'd': {
 					number = va_arg(aptr, int);
 					
-					//strcpy(number_buffer, "Test");
-					mini_itoa(number, number_buffer);
+					itoa(number, number_buffer, 10);
 					
-					*oi = number_buffer;
+					oi = number_buffer;
 					for (; *oi; oi++, d++) {
 						*d = *oi;
 					}
@@ -224,9 +188,9 @@ int main (void)
 	
 	// Main Loop
 	while (1) {
+		vnTextF("Test number format %d -- %d", 4, 5);
 		vnText("This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
 		Here's yet another line added to test if the line wrapping is working.");
-		//vnTextF("Test number format %d -- %d", 4, 5);
 	}
     	
     // Done
