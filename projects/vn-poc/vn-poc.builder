@@ -4,21 +4,10 @@
     "general": {
         "disk": "vn-poc", 
         "code": [
-            "projects/vn-poc/src/test.c"
+            "projects/vn-poc/src/test.c", 
+            "projects/vn-poc/src/menu.c"
         ], 
-        "shared": [
-            "projects/slicks/navigation/arizona.nav", 
-            "projects/slicks/navigation/arto.nav", 
-            "projects/slicks/navigation/cramp.nav", 
-            "projects/slicks/navigation/freeway.nav", 
-            "projects/slicks/navigation/gta.nav", 
-            "projects/slicks/navigation/island.nav", 
-            "projects/slicks/navigation/mtcarlo.nav", 
-            "projects/slicks/navigation/rally.nav", 
-            "projects/slicks/navigation/river.nav", 
-            "projects/slicks/navigation/stadium.nav", 
-            "projects/slicks/navigation/suzuka.nav"
-        ], 
+        "shared": [], 
         "charmap": []
     }, 
     "platform": {

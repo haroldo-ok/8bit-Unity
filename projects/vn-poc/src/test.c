@@ -1,6 +1,7 @@
 
 // 8bit-Unity SDK
 #include "unity.h"
+#include "menu.h"
 
 #include <string.h>
 
@@ -166,6 +167,7 @@ void vnTextF(char *format, ...) {
 int main (void) 
 {
 	unsigned char i;
+    int mn_option_1, mn_choice_2, mn_choice_3;
 	
 	// Reset screen
 	clrscr();
@@ -188,6 +190,14 @@ int main (void)
 	
 	// Main Loop
 	while (1) {
+		initMenu();
+
+		mn_choice_2 = addMenuItem("Option 1");
+		mn_choice_3 = addMenuItem("Option 2");
+
+		drawMenu();
+		//mn_option_1 = vnMenu();
+
 		vnTextF("Test number format %d -- %d", 4, 5);
 		vnText("This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
 		Here's yet another line added to test if the line wrapping is working.");

@@ -1,5 +1,3 @@
-#include "gfx.h"
-#include "text.h"
 #include "menu.h"
 
 #define MENU_ENTRY_COUNT 8
@@ -33,11 +31,18 @@ unsigned char drawMenu() {
 	int i, y;
 	char selected;
 	
-	y = (FBF_HEIGHT - (int) usedMenuEntries * 36) >> 1;
-	for (i = 0; i < usedMenuEntries; i++, y += 36, m++) {
+	y = (CHR_ROWS - usedMenuEntries - 2) >> 1;
+	Panel(1, y, CHR_COLS - 2, usedMenuEntries + 1, "");
+	y++;
+	
+	for (i = 0; i < usedMenuEntries; i++, y++, m++) {
 		selected = m->idx == menuCursor;
+		
+		PrintStr(1, y, m->s);
+		/*
 		translucentRectangle(8, y, 304, 32, !selected ? 0 : COLOR(3, 3, 3));
 		drawWrappedText(m->s, 12, y, 300, 32, !selected ? 0x7FFF : COLOR(0x1F, 0x1F, 0x0F));
+		*/
 	}
 }
 

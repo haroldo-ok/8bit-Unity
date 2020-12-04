@@ -1,7 +1,7 @@
 #ifndef _MENU_H
 #define _MENU_H
 
-#include "32x.h"
+#include "unity.h"
 
 void initMenu();
 unsigned char addMenuItem(char *s);
