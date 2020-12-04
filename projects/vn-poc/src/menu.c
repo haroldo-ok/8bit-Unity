@@ -38,7 +38,8 @@ unsigned char drawMenu() {
 	for (i = 0; i < usedMenuEntries; i++, y++, m++) {
 		selected = m->idx == menuCursor;
 		
-		PrintStr(1, y, m->s);
+		PrintNum(1, y, i + 1);
+		PrintStr(3, y, m->s);
 		/*
 		translucentRectangle(8, y, 304, 32, !selected ? 0 : COLOR(3, 3, 3));
 		drawWrappedText(m->s, 12, y, 300, 32, !selected ? 0x7FFF : COLOR(0x1F, 0x1F, 0x0F));

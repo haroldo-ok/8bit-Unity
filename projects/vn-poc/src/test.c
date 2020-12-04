@@ -164,6 +164,24 @@ void vnTextF(char *format, ...) {
 	vnText(buffer);
 }
 
+char vnMenu() {
+	char ch;
+	int option;
+	
+	drawMenu();
+	
+	option = 0;
+	while (!option) {
+		ch = cgetc();
+		option = ch - '0';
+		if (option < 0 || option > menuItemCount()) {
+			option = 0;
+		}
+	}
+	
+	return option;
+}
+
 int main (void) 
 {
 	unsigned char i;
@@ -195,8 +213,15 @@ int main (void)
 		mn_choice_2 = addMenuItem("Option 1");
 		mn_choice_3 = addMenuItem("Option 2");
 
-		drawMenu();
-		//mn_option_1 = vnMenu();
+		mn_option_1 = vnMenu();
+
+		if (mn_option_1 == mn_choice_2) {
+		  vnText("You chose option one");
+		}
+
+		if (mn_option_1 == mn_choice_3) {
+		  vnText("You chose option two");
+		}
 
 		vnTextF("Test number format %d -- %d", 4, 5);
 		vnText("This is a test with really long lines let's see if they wrap correctly.\nI hope they do.\nHere's another line...\nAnd another.\n\
