@@ -5,11 +5,19 @@
 
 #include <string.h>
 
+const char *vi_club = "menu.img";
+const char *vi_lecturehall = "arizona.img";
+const char *vi_sylvie_giggle = "sylvie_giggle.img";
+
 #define MSG_COL_COUNT (CHR_COLS - 2)
 #define MSG_LINE_COUNT 4
 
 unsigned char* msgLines[MSG_LINE_COUNT];
 char characterName[32];
+
+char *backgroundImage;
+char *actorImage;
+
 
 char *bufferWrappedTextLine(char *s, char x, char y, char w) {
 	char *o, ch;
@@ -182,6 +190,15 @@ char vnMenu() {
 	return option;
 }
 
+void vnScene(char *scene) {
+	backgroundImage = scene;
+    LoadBitmap(scene);
+}
+
+void vnShow(char *actor) {
+	actorImage = actor;
+}
+
 int main (void) 
 {
 	unsigned char i;
@@ -196,7 +213,6 @@ int main (void)
 	InitJoy();
 	InitBitmap();
 
-    LoadBitmap("menu.img");
 	EnterBitmapMode();
 	
 	for (i = 0; i != MSG_LINE_COUNT; i++) {
@@ -208,6 +224,8 @@ int main (void)
 	
 	// Main Loop
 	while (1) {
+		vnScene(vi_club);
+		
 		initMenu();
 
 		mn_choice_2 = addMenuItem("Option 1");
