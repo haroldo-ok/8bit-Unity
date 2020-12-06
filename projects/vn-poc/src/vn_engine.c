@@ -52,10 +52,6 @@ unsigned char drawMenu() {
 		
 		PrintNum(1, y, i + 1);
 		PrintStr(3, y, m->s);
-		/*
-		translucentRectangle(8, y, 304, 32, !selected ? 0 : COLOR(3, 3, 3));
-		drawWrappedText(m->s, 12, y, 300, 32, !selected ? 0x7FFF : COLOR(0x1F, 0x1F, 0x0F));
-		*/
 	}
 }
 
@@ -210,7 +206,14 @@ void vnText(char *text) {
 		
 		ListBox(1, CHR_ROWS - MSG_LINE_COUNT - 4, MSG_COL_COUNT, MSG_LINE_COUNT + 2, "Character name", msgLines, MSG_LINE_COUNT);	
 
-		cgetc();
+		#ifdef __LYNX__
+			// Wait until the joystick button is pressed
+			while (GetJoy(0) & JOY_BTN1);
+			// Wait until the joystick button is released
+			while (!(GetJoy(0) & JOY_BTN1));
+		#else
+			cgetc();
+		#endif
 	}
 }
 
