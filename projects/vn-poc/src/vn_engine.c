@@ -38,20 +38,30 @@ unsigned char addMenuItem(char *s) {
 	return m->idx;
 }
 
+unsigned char menuTop() {
+	return (CHR_ROWS - usedMenuEntries - 2) >> 1;
+}
+
+void drawMenuLine(int number) {
+	int y = menuTop() + number - 1;
+	#ifdef __LYNX__
+		PrintStr(1, y, number == menuCursor ? "*" : " ");
+	#else
+		PrintNum(1, y, number);
+	#endif
+	PrintStr(3, y, menuEntries[number - 1].s);
+}
+
 unsigned char drawMenu() {
 	menuEntry *m = menuEntries;
 	int i, y;
 	char selected;
 	
-	y = (CHR_ROWS - usedMenuEntries - 2) >> 1;
-	Panel(1, y, CHR_COLS - 2, usedMenuEntries + 1, "");
-	y++;
+	y = menuTop();
+	Panel(1, y - 1, CHR_COLS - 2, usedMenuEntries + 1, "");
 	
-	for (i = 0; i < usedMenuEntries; i++, y++, m++) {
-		selected = m->idx == menuCursor;
-		
-		PrintNum(1, y, i + 1);
-		PrintStr(3, y, m->s);
+	for (i = 1; i <= usedMenuEntries; i++) {
+		drawMenuLine(i);
 	}
 }
 
@@ -150,6 +160,11 @@ void bufferClear() {
 	}
 }
 
+void waitJoyButtonRelease() {
+	// Wait until the joystick button is released
+	while (!(GetJoy(0) & JOY_BTN1));
+}
+
 void drawScene() {
     LoadBitmap(backgroundImage);
 }
@@ -209,8 +224,7 @@ void vnText(char *text) {
 		#ifdef __LYNX__
 			// Wait until the joystick button is pressed
 			while (GetJoy(0) & JOY_BTN1);
-			// Wait until the joystick button is released
-			while (!(GetJoy(0) & JOY_BTN1));
+			waitJoyButtonRelease();
 		#else
 			cgetc();
 		#endif
@@ -267,16 +281,49 @@ void vnTextF(char *format, ...) {
 char vnMenu() {
 	char ch;
 	int option;
+	#ifdef __LYNX__	
+		unsigned char joy, lastJoy = 0;
+		unsigned char originalInk = inkColor;
+		char oldCursor = 1;
+		
+		menuCursor = 1;
+	#endif
 	
 	drawMenu();
 	
 	option = 0;
-	while (!option) {
-		ch = cgetc();
-		option = ch - '0';
-		if (option < 0 || option > menuItemCount()) {
-			option = 0;
-		}
+	while (!option) {		
+		#ifdef __LYNX__
+			// Joystick operated menu
+			joy = GetJoy(0);
+			if (joy != lastJoy) {							
+				if (!(joy & JOY_BTN1)) {
+					option = menuCursor;
+					waitJoyButtonRelease();
+				} else if (!(joy & JOY_UP)) {
+					menuCursor--;
+					if (menuCursor < 1) menuCursor = menuItemCount();
+				} else if (!(joy & JOY_DOWN)) {
+					menuCursor++;
+					if (menuCursor > menuItemCount()) menuCursor = 1;
+				}
+				
+				drawMenuLine(oldCursor);
+				inkColor = YELLOW;
+				drawMenuLine(menuCursor);
+				inkColor = originalInk;
+				
+				oldCursor = menuCursor;				
+				lastJoy = joy;
+			}
+		#else
+			// Number key menu: checks if the user pressed a numeric key within the acceptable range
+			ch = cgetc();
+			option = ch - '0';
+			if (option < 0 || option > menuItemCount()) {
+				option = 0;
+			}
+		#endif
 	}
 	
 	drawScene();
