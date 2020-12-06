@@ -110,6 +110,10 @@ void bufferClear() {
 	}
 }
 
+void drawScene() {
+    LoadBitmap(backgroundImage);
+}
+
 void vnText(char *text) {
 	char *textToDisplay;
 	
@@ -187,16 +191,22 @@ char vnMenu() {
 		}
 	}
 	
+	drawScene();
+	
 	return option;
 }
 
 void vnScene(char *scene) {
 	backgroundImage = scene;
-    LoadBitmap(scene);
+    drawScene();
 }
 
 void vnShow(char *actor) {
 	actorImage = actor;
+}
+
+void vnChar(char *charName) {
+	strcpy(characterName, charName);
 }
 
 int main (void) 
@@ -225,6 +235,8 @@ int main (void)
 	// Main Loop
 	while (1) {
 		vnScene(vi_club);
+		vnShow(vi_sylvie_giggle);
+		vnChar("Sylvie");
 		
 		initMenu();
 
