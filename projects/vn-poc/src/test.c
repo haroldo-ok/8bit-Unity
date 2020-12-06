@@ -1,7 +1,6 @@
 
 // 8bit-Unity SDK
 #include "unity.h"
-#include "menu.h"
 #include "vn_engine.h"
 
 #include <string.h>
