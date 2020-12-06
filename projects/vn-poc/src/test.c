@@ -209,8 +209,7 @@ void vnChar(char *charName) {
 	strcpy(characterName, charName);
 }
 
-int main (void) 
-{
+void initGfx() {
 	unsigned char i;
     int mn_option_1, mn_choice_2, mn_choice_3;
 	
@@ -220,17 +219,32 @@ int main (void)
     bgcolor(COLOR_BLACK);
 
 	// Initialize modules
-	InitJoy();
 	InitBitmap();
-
+	
 	EnterBitmapMode();
 	
 	for (i = 0; i != MSG_LINE_COUNT; i++) {
 		msgLines[i] = malloc(MSG_COL_COUNT);
-		strcpy(msgLines[i], "");
 	}
+	bufferClear();	
+}
+
+void initVN() {
+	initGfx();
+	InitJoy();
+	initMenu();
 	
-	strcpy(characterName, "Name of the character");
+	backgroundImage = 0;
+	actorImage = 0;
+	strcpy(characterName, "");
+}
+
+int main (void) 
+{
+	unsigned char i;
+    int mn_option_1, mn_choice_2, mn_choice_3;
+	
+	initVN();
 	
 	// Main Loop
 	while (1) {
@@ -238,6 +252,8 @@ int main (void)
 		vnShow(vi_sylvie_giggle);
 		vnChar("Sylvie");
 		
+		vnText("Testing the VN engine.");
+		  
 		initMenu();
 
 		mn_choice_2 = addMenuItem("Option 1");
