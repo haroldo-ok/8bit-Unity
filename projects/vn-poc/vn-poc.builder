@@ -5,7 +5,8 @@
         "disk": "vn-poc", 
         "code": [
             "projects/vn-poc/src/vn_engine.c", 
-            "projects/vn-poc/src/test.c"
+            "projects/vn-poc/src/main.c", 
+            "projects/vn-poc/src/generated_script.c"
         ], 
         "shared": [], 
         "charmap": []
