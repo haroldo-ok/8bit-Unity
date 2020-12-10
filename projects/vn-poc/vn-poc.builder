@@ -84,7 +84,9 @@
                 "projects/slicks/bitmaps/rally-c64.png", 
                 "projects/slicks/bitmaps/river-c64.png", 
                 "projects/slicks/bitmaps/stadium-c64.png", 
-                "projects/slicks/bitmaps/suzuka-c64.png"
+                "projects/slicks/bitmaps/suzuka-c64.png", 
+                "projects/vn-poc/bitmaps/arizonaarizonaarizona-c64.png", 
+                "projects/vn-poc/bitmaps/club-c64.png"
             ], 
             "sprites": [
                 "projects/slicks/sprites/sprites-c64.png"

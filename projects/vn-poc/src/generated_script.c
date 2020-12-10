@@ -8,7 +8,7 @@ const char *vi_sylvie_normal = "sylvie_normal.img";
 */
 const char *vi_lecturehall = "menu.img";
 const char *vi_sylvie_giggle = "sylvie_giggle.img";
-const char *vi_club = "arizona.img";
+const char *vi_club = "club.img";
 const char *vi_sylvie_normal = "sylvie_normal.img";
 
 int gv_val;
